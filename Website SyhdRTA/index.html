@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KETHUNG PROJECT</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+:root{
+  --green:#00ffcc;
+  --cyan:#00ccff;
+  --dark:#0a0f0d;
+  --card:#0d1410;
+  --card2:#111a16;
+}
+
+body{
+  background:var(--dark);
+  color:#fff;
+  font-family:'Nunito',sans-serif;
+  overflow-x:hidden;
+}
+
+/* BG GRADIENT + MOUNTAIN SILHOUETTE */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, #00281e 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 20% 100%, #001a10 0%, transparent 60%),
+    #060b08;
+  z-index:-2;
+}
+
+/* animated particles */
+.particles{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.p{
+  position:absolute;
+  width:2px;height:2px;
+  background:#00ffcc;
+  border-radius:50%;
+  opacity:0;
+  animation:float linear infinite;
+}
+@keyframes float{
+  0%{opacity:0;transform:translateY(100vh) scale(0)}
+  10%{opacity:.6}
+  90%{opacity:.3}
+  100%{opacity:0;transform:translateY(-10vh) scale(1.5)}
+}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;width:100%;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 40px;
+  background:rgba(6,11,8,0.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(0,255,204,0.12);
+  z-index:100;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;font-size:17px;
+  color:#fff;letter-spacing:1px;
+  text-transform:uppercase;
+}
+.nav-logo-icon{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,#00ffcc,#00994d);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{
+  color:rgba(255,255,255,0.7);
+  text-decoration:none;
+  font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  transition:.2s;
+  position:relative;padding-bottom:3px;
+}
+.nav-links a.active,
+.nav-links a:hover{color:#fff}
+.nav-links a.active::after{
+  content:"";position:absolute;bottom:0;left:0;right:0;
+  height:2px;background:var(--green);border-radius:2px;
+}
+.nav-discord{
+  padding:9px 18px;
+  background:rgba(88,101,242,0.15);
+  border:1px solid rgba(88,101,242,0.5);
+  border-radius:8px;
+  color:#fff;font-size:12px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  transition:.25s;
+  display:flex;align-items:center;gap:7px;
+}
+.nav-discord:hover{background:rgba(88,101,242,0.35);border-color:#7289da}
+.nav-discord svg{width:16px;height:16px;fill:#7289da}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:80px 20px 40px;
+  position:relative;
+}
+
+/* mountain silhouette SVG bg */
+.mountain-bg{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:50%;
+  opacity:.25;
+  background:
+    linear-gradient(to top, #001a0f, transparent);
+}
+.mountain-bg svg{
+  position:absolute;
+  bottom:0;width:100%;height:100%;
+}
+
+.hero-subtitle{
+  font-size:13px;letter-spacing:5px;
+  color:rgba(255,255,255,0.55);
+  text-transform:uppercase;
+  margin-bottom:10px;
+  font-weight:600;
+}
+.hero h1{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(48px,8vw,90px);
+  font-weight:700;
+  line-height:1;
+  background:linear-gradient(90deg,#00ffcc 0%,#00ffe0 40%,#00ccff 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  filter:drop-shadow(0 0 30px rgba(0,255,204,0.3));
+  animation:heroIn .8s ease both;
+}
+@keyframes heroIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+.hero-desc{
+  margin-top:12px;
+  font-size:14px;color:rgba(255,255,255,0.5);
+  letter-spacing:4px;text-transform:uppercase;
+  font-weight:600;
+  animation:heroIn .8s .15s ease both;
+}
+
+.hero-btns{
+  margin-top:36px;display:flex;gap:14px;
+  animation:heroIn .8s .3s ease both;
+}
+.btn-main{
+  padding:13px 32px;
+  border-radius:8px;
+  background:linear-gradient(135deg,#00ffcc,#00b894);
+  color:#000;font-weight:700;font-size:13px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  border:none;cursor:pointer;
+  transition:.25s;
+  box-shadow:0 0 20px rgba(0,255,204,0.35);
+}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,255,204,0.55)}
+.btn-out{
+  padding:13px 32px;
+  border-radius:8px;
+  background:transparent;
+  border:1px solid rgba(0,255,204,0.4);
+  color:var(--green);
+  font-weight:700;font-size:13px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;transition:.25s;
+}
+.btn-out:hover{background:rgba(0,255,204,0.08);border-color:var(--green)}
+
+/* ── MAPS SECTION ── */
+.section{
+  padding:100px 30px 80px;
+  max-width:1100px;
+  margin:0 auto;
+}
+.sec-title{
+  text-align:center;
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(28px,4vw,44px);
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--green);
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  margin-bottom:10px;
+}
+.sec-title::before,
+.sec-title::after{
+  content:"";flex:1;max-width:80px;
+  height:1px;background:linear-gradient(to right,transparent,var(--green));
+}
+.sec-title::after{background:linear-gradient(to left,transparent,var(--green))}
+.sec-sub{
+  text-align:center;font-size:13px;
+  color:rgba(255,255,255,0.4);
+  letter-spacing:3px;text-transform:uppercase;
+  margin-bottom:40px;
+}
+
+/* CARDS GRID */
+.maps-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
+}
+.map-card{
+  background:var(--card);
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(0,255,204,0.1);
+  transition:.3s ease;
+  position:relative;
+}
+.map-card::before{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,255,204,0.04),transparent);
+  opacity:0;transition:.3s;
+}
+.map-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(0,255,204,0.4);
+  box-shadow:0 8px 40px rgba(0,255,204,0.15);
+}
+.map-card:hover::before{opacity:1}
+
+.map-logo{
+  height:160px;
+  display:flex;justify-content:center;align-items:center;
+  background:#000;
+  position:relative;overflow:hidden;
+}
+.map-logo::after{
+  content:"";
+  position:absolute;bottom:0;left:0;right:0;
+  height:40px;
+  background:linear-gradient(to top,var(--card),transparent);
+}
+.map-logo img{
+  max-width:130px;max-height:130px;
+  object-fit:contain;
+  transition:.35s;
+  filter:drop-shadow(0 0 14px rgba(0,255,204,0.25));
+}
+.map-card:hover .map-logo img{
+  transform:scale(1.08);
+  filter:drop-shadow(0 0 24px rgba(0,255,204,0.5));
+}
+
+/* logo placeholder circles */
+.logo-placeholder{
+  width:110px;height:110px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Rajdhani',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:2px;text-transform:uppercase;
+  transition:.35s;
+}
+.map-card:hover .logo-placeholder{transform:scale(1.08)}
+
+.lp-jalur{background:radial-gradient(circle,#ff6eb4,#c0357e);color:#fff}
+.lp-gajelas{background:radial-gradient(circle,#6644cc,#2d1a7a);color:#fff;font-size:11px}
+.lp-alula{background:radial-gradient(circle,#ff6600,#8b0000);color:#fff}
+
+.map-info{padding:18px}
+.map-info h3{
+  font-family:'Rajdhani',sans-serif;
+  font-size:20px;font-weight:700;
+  color:var(--green);letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+.map-info p{
+  font-size:13px;color:rgba(255,255,255,0.6);
+  line-height:1.5;margin-bottom:14px;
+}
+.btn-play{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 20px;
+  background:linear-gradient(135deg,#00ffcc,#00b894);
+  color:#000;font-weight:700;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;
+  border:none;border-radius:7px;cursor:pointer;
+  transition:.25s;
+}
+.btn-play:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,255,204,0.4)}
+.btn-play svg{width:13px;height:13px;fill:#000}
+
+/* ── SUPPORT SECTION ── */
+.support-wrap{
+  max-width:1100px;margin:0 auto;
+  padding:0 30px 100px;
+}
+.support-inner{
+  background:var(--card);
+  border-radius:20px;
+  border:1px solid rgba(0,255,204,0.12);
+  padding:50px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:40px;
+  position:relative;overflow:hidden;
+}
+.support-inner::before{
+  content:"";position:absolute;
+  top:-60px;left:-60px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(0,255,204,0.08),transparent 70%);
+}
+.support-mascot{
+  display:flex;justify-content:flex-end;
+  position:relative;
+}
+.mascot-img{
+  width:130px;
+  filter:drop-shadow(0 0 16px rgba(0,255,204,0.3));
+  animation:bob 3s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* hearts around mascot */
+.hearts{position:absolute;pointer-events:none}
+.heart{
+  position:absolute;color:#00ffcc;font-size:16px;
+  animation:heartFloat 2.5s ease-in-out infinite;
+  opacity:.7;
+}
+.heart:nth-child(1){top:-20px;left:10px;animation-delay:0s}
+.heart:nth-child(2){top:10px;right:-10px;animation-delay:.6s;font-size:12px}
+.heart:nth-child(3){bottom:20px;left:-5px;animation-delay:1.2s;font-size:10px}
+@keyframes heartFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.2)}}
+
+.support-text{text-align:center}
+.support-text h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(24px,3vw,36px);
+  font-weight:700;color:var(--green);
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:8px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.support-text p{
+  font-size:14px;color:rgba(255,255,255,0.6);
+  line-height:1.6;margin-bottom:6px;
+}
+.support-tagline{
+  font-size:12px;color:rgba(0,255,204,0.6);
+  letter-spacing:2px;text-transform:uppercase;
+  font-weight:700;margin-bottom:18px;
+}
+.btn-discord{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 24px;
+  background:rgba(88,101,242,0.15);
+  border:1px solid rgba(88,101,242,0.5);
+  color:#fff;font-weight:700;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;
+  border-radius:8px;cursor:pointer;transition:.25s;
+  text-decoration:none;
+}
+.btn-discord:hover{background:rgba(88,101,242,0.35);border-color:#7289da}
+.btn-discord svg{width:16px;height:16px;fill:#7289da}
+
+.qr-side{display:flex;justify-content:flex-start}
+.qr-box{
+  padding:16px;border-radius:14px;
+  background:#fff;
+  box-shadow:0 0 30px rgba(0,255,204,0.25);
+  position:relative;
+}
+.qr-box::after{
+  content:"Scan Me!";
+  position:absolute;
+  bottom:-26px;left:50%;transform:translateX(-50%);
+  font-size:11px;color:var(--green);
+  letter-spacing:2px;text-transform:uppercase;
+  font-weight:700;white-space:nowrap;
+}
+.qr-box img{
+  width:160px;height:160px;
+  display:block;
+}
+/* QR placeholder */
+.qr-placeholder{
+  width:160px;height:160px;
+  background:#f0f0f0;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:6px;
+  color:#333;font-size:11px;font-weight:700;letter-spacing:1px;
+  text-align:center;
+}
+.qr-placeholder svg{width:80px;height:80px;opacity:.3}
+
+/* ── FOOTER ── */
+.footer{
+  text-align:center;
+  padding:24px;
+  border-top:1px solid rgba(255,255,255,0.06);
+  font-size:12px;color:rgba(255,255,255,0.3);
+  letter-spacing:2px;text-transform:uppercase;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:750px){
+  .nav{padding:12px 20px}
+  .nav-logo span{display:none}
+  .support-inner{grid-template-columns:1fr;text-align:center;padding:30px 20px}
+  .support-mascot,.qr-side{justify-content:center}
+  .section,.support-wrap{padding-left:16px;padding-right:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    <span>Kethung Project</span>
+  </div>
+  <div class="nav-links">
+    <a href="#home" class="active">Home</a>
+    <a href="#maps">Maps</a>
+    <a href="#support">Support</a>
+  </div>
+  <a class="nav-discord" href="https://discord.gg/kpHDnrqFBs" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+    Join Discord
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="mountain-bg">
+    <svg viewBox="0 0 1440 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 300L120 200L240 250L360 150L480 220L600 100L720 180L840 80L960 160L1080 60L1200 140L1320 90L1440 120V300H0Z" fill="rgba(0,255,204,0.06)"/>
+      <path d="M0 300L180 230L360 270L540 190L720 240L900 160L1080 210L1260 150L1440 180V300H0Z" fill="rgba(0,255,204,0.04)"/>
+    </svg>
+  </div>
+  <div class="hero-subtitle">Roblox Developer · RTA Builder</div>
+  <h1>KETHUNG PROJECT</h1>
+  <div class="hero-desc">Build · Race · Conquer</div>
+  <div class="hero-btns">
+    <button class="btn-main" onclick="scrollTo('maps')">Explore Maps</button>
+    <button class="btn-out" onclick="scrollTo('support')">Support Us</button>
+  </div>
+</section>
+
+<!-- MAPS -->
+<section id="maps">
+  <div class="section">
+    <h2 class="sec-title">RTA Maps</h2>
+    <p class="sec-sub">Pick your challenge</p>
+    <div class="maps-grid">
+
+      <!-- JALUR SEMBARANGAN -->
+      <div class="map-card">
+        <div class="map-logo">
+          <img src="Jsv2.png" alt="Jalur Sembarangan"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-placeholder lp-jalur" style="display:none">
+            🏔️<br>Jalur Sv2
+          </div>
+        </div>
+        <div class="map-info">
+          <h3>Jalur Sembarangan</h3>
+          <p>Obstacle random penuh tantangan 🔥</p>
+          <button class="btn-play" onclick="openGame('https://www.roblox.com/id/games/128407315914554/Jalur-Sembarangan')">
+            Play
+            <svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- MOUNT GAJELAS -->
+      <div class="map-card">
+        <div class="map-logo">
+          <img src="Gjls.png" alt="Mount Gajelas"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-placeholder lp-gajelas" style="display:none">
+            ⛰️<br>Mount Gajelas<br>Hard Mode
+          </div>
+        </div>
+        <div class="map-info">
+          <h3>Mount Gajelas</h3>
+          <p>Parkour ekstrim buat pro 😈</p>
+          <button class="btn-play" onclick="openGame('https://www.roblox.com/id/games/125375302873987/MOUNT-GAJELAS-HARD-MODE')">
+            Play
+            <svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- AL ULA -->
+      <div class="map-card">
+        <div class="map-logo">
+          <img src="Rta.png" alt="Al Ula"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-placeholder lp-alula" style="display:none">
+            🦅<br>Al Ula
+          </div>
+        </div>
+        <div class="map-info">
+          <h3>Al Ula</h3>
+          <p>Map dugem aesthetic 🎧🔥</p>
+          <button class="btn-play" onclick="openGame('https://www.roblox.com/id/games/112056809943340/AlUla')">
+            Play
+            <svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section id="support">
+  <div class="support-wrap">
+    <h2 class="sec-title" style="margin-bottom:10px">Support Kami 💚</h2>
+    <p class="sec-sub" style="margin-bottom:30px">Dukung project &amp; perkembangan map!</p>
+    <div class="support-inner">
+
+      <!-- MASCOT -->
+      <div class="support-mascot">
+        <div class="hearts">
+          <span class="heart">💚</span>
+          <span class="heart">💚</span>
+          <span class="heart">💚</span>
+        </div>
+        <!-- Mascot SVG placeholder (monster/bear) -->
+        <svg class="mascot-img" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- body -->
+          <ellipse cx="70" cy="105" rx="45" ry="48" fill="#6b3fa0"/>
+          <!-- belly -->
+          <ellipse cx="70" cy="112" rx="27" ry="30" fill="#8b5fcf"/>
+          <!-- RP bag -->
+          <rect x="48" y="100" width="44" height="34" rx="8" fill="#4a2d7a"/>
+          <text x="70" y="123" text-anchor="middle" fill="#00ffcc" font-size="14" font-weight="bold" font-family="Rajdhani,sans-serif">RP</text>
+          <!-- head -->
+          <ellipse cx="70" cy="62" rx="36" ry="32" fill="#7a47b5"/>
+          <!-- ears -->
+          <ellipse cx="36" cy="42" rx="12" ry="14" fill="#6b3fa0"/>
+          <ellipse cx="36" cy="42" rx="6" ry="8" fill="#ff7eb9"/>
+          <ellipse cx="104" cy="42" rx="12" ry="14" fill="#6b3fa0"/>
+          <ellipse cx="104" cy="42" rx="6" ry="8" fill="#ff7eb9"/>
+          <!-- eyes -->
+          <circle cx="57" cy="60" r="9" fill="#fff"/>
+          <circle cx="83" cy="60" r="9" fill="#fff"/>
+          <circle cx="59" cy="62" r="5" fill="#2d1a5e"/>
+          <circle cx="85" cy="62" r="5" fill="#2d1a5e"/>
+          <circle cx="60" cy="61" r="2" fill="#fff"/>
+          <circle cx="86" cy="61" r="2" fill="#fff"/>
+          <!-- smile -->
+          <path d="M58 76 Q70 86 82 76" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <!-- arms -->
+          <ellipse cx="24" cy="108" rx="12" ry="20" fill="#6b3fa0" transform="rotate(-15 24 108)"/>
+          <ellipse cx="116" cy="108" rx="12" ry="20" fill="#6b3fa0" transform="rotate(15 116 108)"/>
+          <!-- legs -->
+          <ellipse cx="53" cy="150" rx="13" ry="11" fill="#6b3fa0"/>
+          <ellipse cx="87" cy="150" rx="13" ry="11" fill="#6b3fa0"/>
+          <!-- horns -->
+          <polygon points="52,32 46,8 60,28" fill="#4a2d7a"/>
+          <polygon points="88,32 94,8 80,28" fill="#4a2d7a"/>
+          <!-- sparkle -->
+          <circle cx="115" cy="30" r="4" fill="#00ffcc" opacity=".8"/>
+          <circle cx="25" cy="80" r="3" fill="#00ffcc" opacity=".6"/>
+        </svg>
+      </div>
+
+      <!-- TEXT -->
+      <div class="support-text">
+        <h2>
+          <span>💚</span> Support Kami <span>💚</span>
+        </h2>
+        <p>Scan QR untuk dukung project<br>dan perkembangan map!</p>
+        <p class="support-tagline">10K Kebaikan, Jutaan Semangat 💚</p>
+        <a class="btn-discord" href="https://discord.gg/kpHDnrqFBs" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          Join Discord
+        </a>
+      </div>
+
+      <!-- QR -->
+      <div class="qr-side">
+        <div class="qr-box">
+          <img src="qr.png" alt="QR Code Support"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <!-- QR placeholder SVG -->
+          <div class="qr-placeholder" style="display:none">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <!-- QR-like pattern -->
+              <rect x="10" y="10" width="30" height="30" fill="none" stroke="#333" stroke-width="3"/>
+              <rect x="16" y="16" width="18" height="18" fill="#333"/>
+              <rect x="60" y="10" width="30" height="30" fill="none" stroke="#333" stroke-width="3"/>
+              <rect x="66" y="16" width="18" height="18" fill="#333"/>
+              <rect x="10" y="60" width="30" height="30" fill="none" stroke="#333" stroke-width="3"/>
+              <rect x="16" y="66" width="18" height="18" fill="#333"/>
+              <rect x="60" y="60" width="8" height="8" fill="#333"/>
+              <rect x="72" y="60" width="8" height="8" fill="#333"/>
+              <rect x="60" y="72" width="8" height="8" fill="#333"/>
+              <rect x="72" y="72" width="8" height="8" fill="#333"/>
+              <rect x="45" y="10" width="8" height="8" fill="#333"/>
+              <rect x="45" y="25" width="8" height="8" fill="#333"/>
+              <rect x="10" y="45" width="8" height="8" fill="#333"/>
+              <rect x="25" y="45" width="8" height="8" fill="#333"/>
+              <rect x="45" y="45" width="8" height="8" fill="#333"/>
+            </svg>
+            <span>qr.png</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 KETHUNG PROJECT. ALL RIGHTS RESERVED.</div>
+
+<script>
+// Floating particles
+(function(){
+  const c = document.getElementById('particles');
+  for(let i=0;i<25;i++){
+    const p = document.createElement('div');
+    p.className='p';
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      animation-duration:${6+Math.random()*10}s;
+      animation-delay:${Math.random()*8}s;
+      width:${1+Math.random()*2}px;
+      height:${1+Math.random()*2}px;
+      opacity:${0.3+Math.random()*0.4};
+    `;
+    c.appendChild(p);
+  }
+})();
+
+// Nav active on scroll
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = ['home','maps','support'];
+window.addEventListener('scroll',()=>{
+  let cur='home';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop-200) cur=id;
+  });
+  navLinks.forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href')==='#'+cur);
+  });
+});
+
+function openGame(url){window.open(url,'_blank')}
+function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+</script>
+</body>
+</html>
